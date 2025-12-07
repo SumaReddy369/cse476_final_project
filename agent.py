@@ -16,9 +16,7 @@ import re
 import requests
 from typing import Literal
 
-# ---------------------------------------------------------------------------
 # Basic API wrapper
-# ---------------------------------------------------------------------------
 
 API_KEY = os.getenv("OPENAI_API_KEY", "cse476")
 API_BASE = os.getenv("API_BASE", "http://10.4.58.53:41701/v1")
@@ -96,11 +94,7 @@ def call_model_chat_completions(
             "headers": {},
         }
 
-
-# ---------------------------------------------------------------------------
-# Domain types and (optional) classifier for the "full" agent
-# ---------------------------------------------------------------------------
-
+# Domain types and classifier for the full agent
 Domain = Literal["math", "coding", "future_prediction", "planning", "common_sense"]
 
 DOMAIN_LABELS: tuple[Domain, ...] = (
@@ -149,11 +143,7 @@ def classify_domain(question: str) -> Domain:
     return "common_sense"
 
 
-# ---------------------------------------------------------------------------
-# (Optional) full multi-step agent pieces (kept for report/code review)
-# ---------------------------------------------------------------------------
-
-
+# full multi-step agent pieces
 def solve_math(question: str) -> str:
     """
     Math solver: ask for explicit reasoning AND a clearly marked final answer.
@@ -304,11 +294,6 @@ def run_agent(question: str) -> str:
     return final.strip()
 
 
-# ---------------------------------------------------------------------------
-# FAST path: used for final JSON – answer ONLY, no reasoning.
-# ---------------------------------------------------------------------------
-
-
 def run_agent_fast(question: str, domain: str | None = None) -> str:
     """
     Lightweight single-call version used for final test generation.
@@ -384,10 +369,7 @@ def run_agent_fast(question: str, domain: str | None = None) -> str:
     return text
 
 
-# ---------------------------------------------------------------------------
 # Small manual smoke test
-# ---------------------------------------------------------------------------
-
 if __name__ == "__main__":
     demo_qs = [
         ("Solve for x: 3x + 5 = 20.", "math"),
